@@ -1,0 +1,237 @@
+/* wrapper anchors coordinates relative to viewport */
+.chatbotWrapper {
+  position: fixed;
+  bottom: var(--chatbot-bottom);
+  right: var(--chatbot-right);
+  z-index: 9999;
+  font-family: "Inter", sans-serif;
+  pointer-events: none; /* prevent wrapper from blocking when closed */
+}
+
+/* chat window floats above the chat button (so no overlap) */
+.chatWindow {
+  position: absolute;
+  right: 0;
+  bottom: calc(var(--button-size) + var(--gap));
+  width: 340px;
+  height: 480px;
+  background: linear-gradient(180deg, rgba(8, 10, 20, 0.98), rgba(12, 15, 30, 0.96));
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow:
+    0 8px 30px rgba(8, 5, 20, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: auto;
+  color: #e6eef8;
+  backdrop-filter: blur(6px);
+}
+
+/* header gradient - matches portfolio button colors */
+.chatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background: linear-gradient(90deg, #ff00cc 0%, #3333ff 100%);
+  color: white;
+  font-weight: 600;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  box-shadow: 0 4px 12px rgba(107, 70, 255, 0.15);
+  font-size: 15px;
+}
+
+/* message area */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+}
+
+/* custom scrollbar */
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+.messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6b46ff, #ff00cc);
+  border-radius: 6px;
+}
+
+/* message bubbles */
+.message {
+  padding: 10px 12px;
+  border-radius: 12px;
+  max-width: 78%;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  font-size: 14px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.userMsg {
+  align-self: flex-end;
+  background: linear-gradient(90deg, rgba(255, 45, 149, 0.95), rgba(0, 230, 202, 0.95));
+  color: #0b0b10;
+  font-weight: 600;
+}
+
+.botMsg {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  color: #d7e6f6;
+}
+
+/* input area */
+.inputArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  background: linear-gradient(180deg, rgba(8, 10, 20, 0.92), rgba(7, 9, 18, 0.96));
+}
+
+.inputArea input {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.inputArea input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.inputArea button {
+  background: linear-gradient(90deg, #ff00cc 0%, #3333ff 100%);
+  border: none;
+  color: white;
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(107, 70, 255, 0.25);
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.inputArea button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.inputArea button:active {
+  transform: translateY(1px);
+}
+
+/* floating toggle button */
+.toggleBtn {
+  position: fixed;
+  bottom: var(--chatbot-bottom);
+  right: var(--chatbot-right);
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #ff2d95 0%, #6b46ff 50%, #00e6ca 100%);
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(107, 70, 255, 0.18);
+  z-index: 10000;
+  pointer-events: auto;
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.toggleBtn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 12px 26px rgba(107, 70, 255, 0.3);
+}
+
+.toggleBtn.open {
+  background: linear-gradient(135deg, #6b46ff 0%, #ff2d95 60%);
+}
+
+/* optional header close button */
+.headerClose {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+/* typing animation */
+.typingDots span {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 18px;
+  animation: blink 1.2s infinite;
+}
+.typingDots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typingDots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* responsive layout */
+@media (max-width: 640px) {
+  .chatWindow {
+    width: 90vw;
+    height: 70vh;
+    right: 16px;
+    bottom: calc(var(--button-size) + 10px);
+  }
+}

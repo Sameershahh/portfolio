@@ -5,8 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/footer";
 import ScrollToTop from "./components/helper/scroll-to-top";
 import Navbar from "./components/navbar";
+import Chatbot from "./components/chatbot/chatbot";
 import "./css/card.scss";
 import "./css/globals.scss";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -14,9 +16,9 @@ export const metadata = {
   description:
     "This is the portfolio of Sameer Shah. I am a full stack developer and a self taught developer. I love to learn new things and I am always open to collaborating with others. I am a quick learner and I am always looking for new challenges.",
   icons: {
-    icon: "/favicon.ico",  // or "/your-custom-icon.png"
+    icon: "/favicon.ico",
   },
-  };
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -26,9 +28,10 @@ export default function RootLayout({ children }) {
         <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
           <Navbar />
           {children}
-          <ScrollToTop />
+          {/*<ScrollToTop />*/}
         </main>
         <Footer />
+        <Chatbot /> {/* 👈 Chatbot added here so it's globally accessible */}
       </body>
       <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM} />
     </html>

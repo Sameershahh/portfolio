@@ -37,3 +37,10 @@ body {
   // padding-top: calc(var(--index) * 2.5rem);
   top: calc(var(--index) * 4rem);
 }
+
+:root {
+  --chatbot-bottom: 24px;
+  --chatbot-right: 24px;
+  --button-size: 64px;
+  --gap: 12px;
+}
