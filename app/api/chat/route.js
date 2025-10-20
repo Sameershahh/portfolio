@@ -8,8 +8,13 @@ export async function POST(request) {
       return NextResponse.json({ error: "Missing message" }, { status: 400 });
     }
 
-    console.log(" Incoming message:", message);
-    console.log(" OpenAI key exists?", !!process.env.OPENAI_API_KEY);
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("Missing OpenAI API key in environment!");
+      return NextResponse.json(
+        { error: "Server misconfiguration: missing API key" },
+        { status: 500 }
+      );
+    }
 
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -23,29 +28,14 @@ export async function POST(request) {
           {
             role: "system",
             content:
-               "You are Sameer Shah’s friendly AI assistant for his portfolio website. \
-                You can introduce yourself as 'Sameer’s AI assistant'. \
-                You know all about Sameer’s skills, projects, and experience. \
-                You can chat casually but keep it professional and relevant to Sameer’s work.",
+              "You are Sameer Shah’s AI assistant. Be professional but conversational. You know all about his skills and experience.",
           },
           { role: "user", content: message },
         ],
-        temperature: 0.7,
-        max_tokens: 400,
       }),
     });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error(" OpenAI API error:", res.status, errorText);
-      return NextResponse.json(
-        { error: "OpenAI request failed." },
-        { status: res.status }
-      );
-    }
-
     const data = await res.json();
-    console.log("OpenAI response:", data);
 
     const reply =
       data?.choices?.[0]?.message?.content ||
@@ -53,7 +43,7 @@ export async function POST(request) {
 
     return NextResponse.json({ reply });
   } catch (error) {
-    console.error(" Server crash:", error);
+    console.error("Server crash:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
