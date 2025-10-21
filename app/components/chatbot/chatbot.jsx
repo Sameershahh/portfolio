@@ -15,7 +15,7 @@ export default function Chatbot() {
 
   const toggleChat = () => setIsOpen(!isOpen);
 
-  // ✅ Send message to your /api/chat route
+  //  Send message to your /api/chat route
   const handleSend = async () => {
   if (!input.trim()) return;
   const newMsg = { sender: "user", text: input };
@@ -47,7 +47,7 @@ export default function Chatbot() {
   }
 };
 
-  // ✅ Allow "Enter" key to send messages
+  //  Allow "Enter" key to send messages
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
